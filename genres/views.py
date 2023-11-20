@@ -4,10 +4,17 @@ from .models import *
 import json
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
+from rest_framework import generics
+from genres.serializers import *
+
+
+class GenreCreateListView(generics.ListCreateAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializers
 
 
 # lISTANDO OS GÊNEROS
-@csrf_exempt
+'''@csrf_exempt
 def genre_create_list_view(request):
     # JEITO MANUAL
     if str(request.method) == 'GET':
@@ -24,10 +31,10 @@ def genre_create_list_view(request):
         return JsonResponse(
             {'id': new_genre.id, 'name': new_genre.name},
             status=201,  # esse parâmetro status confirma a criação
-        )
+        )'''
 
 
-@csrf_exempt
+'''@csrf_exempt
 def genre_detail_view(request, pk):
     genre = get_object_or_404(Genre, pk=pk)
     if str(request.method) == 'GET':
@@ -46,4 +53,9 @@ def genre_detail_view(request, pk):
         return JsonResponse(
             {'message': 'Gênero excluído com sucesso!'},
             status=204,
-        )
+        )'''
+
+
+class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Genre.objects.all()
+    serializer_class = GenreSerializers

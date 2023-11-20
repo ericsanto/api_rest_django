@@ -1,3 +1,2 @@
 venv
-dbsqlite3
-media
+db.sqlite3
