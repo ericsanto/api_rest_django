@@ -2,6 +2,9 @@
 from .models import *
 from rest_framework import generics
 from genres.serializers import *
+from rest_framework.response import Response
+from rest_framework import status
+from django.http import JsonResponse
 
 
 class GenreCreateListView(generics.ListCreateAPIView):
@@ -55,3 +58,8 @@ def genre_detail_view(request, pk):
 class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({'message': 'Gênero excluído com sucesso'}, status=status.HTTP_204_NO_CONTENT)
