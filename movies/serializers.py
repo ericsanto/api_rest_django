@@ -1,12 +1,21 @@
 from rest_framework import serializers
 from movies.models import Movie
+from django.shortcuts import get_object_or_404
+from reviews.models import Review
+from django.db.models import Avg
 
 
 class MovieSerializers(serializers.ModelSerializer):
+    rate = serializers.SerializerMethodField()
 
     class Meta:
         model = Movie
         fields = '__all__'
+
+    def get_rate(self, obj):
+        reviews = obj.reviews.all().aggregate(
+            Avg('stars'))['stars__avg']
+        return reviews
 
     def validate_resume(self, value):
         if len(value) > 200:
