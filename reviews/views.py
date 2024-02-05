@@ -1,12 +1,13 @@
-from django.shortcuts import render
 from reviews.models import *
 from reviews.serializers import *
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 
 class ReviewCreateListView(ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 
@@ -19,6 +20,7 @@ class ReviewCreateListView(ListCreateAPIView):
 
 
 class ReviewRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 

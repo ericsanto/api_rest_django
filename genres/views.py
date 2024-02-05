@@ -4,10 +4,11 @@ from rest_framework import generics
 from genres.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
-from django.http import JsonResponse
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 class GenreCreateListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
 
@@ -63,6 +64,7 @@ def genre_detail_view(request, pk):
 
 
 class GenreRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
 

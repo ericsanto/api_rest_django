@@ -1,12 +1,13 @@
-from django.shortcuts import render
 from rest_framework import generics
 from actors.models import *
 from actors.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 class ActorCreateListView(generics.ListCreateAPIView):
+    permission_classes = (IsAuthenticated,)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializers
 
@@ -19,6 +20,7 @@ class ActorCreateListView(generics.ListCreateAPIView):
 
 
 class ActorRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = (IsAdminUser,)
     queryset = Actor.objects.all()
     serializer_class = ActorSerializers
 
