@@ -3,11 +3,12 @@ from reviews.serializers import *
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser, IsAuthenticatedOrReadOnly
+from authentication.permissions import IsAdminOrReadyOnly
 
 
 class ReviewCreateListView(ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminOrReadyOnly, )
     queryset = Review.objects.all()
     serializer_class = ReviewSerializers
 

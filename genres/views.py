@@ -5,10 +5,11 @@ from genres.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from authentication.permissions import IsAdminOrReadyOnly
 
 
 class GenreCreateListView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminOrReadyOnly,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializers
 

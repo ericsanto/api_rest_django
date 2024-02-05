@@ -3,11 +3,12 @@ from movies.models import *
 from movies.serializers import *
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser
+from authentication.permissions import IsAdminOrReadyOnly
 
 
 class MovieCreateListView(generics.ListCreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAdminOrReadyOnly,)
     queryset = Movie.objects.all()
     serializer_class = MovieSerializers
 
